@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>My App</title>
+	<meta name="description" content="Template project with flask and flask-login">
+	<link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon/favicon-16x16.png">
+	<link rel="manifest" href="/static/img/favicon/site.webmanifest">
+	<link href="/static/css/my_app.css" rel="stylesheet">
+</head>
+
+{% macro text(field, name, placeholder="") %}
+<div class="form-group">
+  {{ field.label(name) }}
+  {{ field(class='form-control', placeholder=placeholder) }}
+  {% for error in field.errors %}
+    <p class="form-error">{{ error }}</p>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+<body>	
+	{% for message in get_flashed_messages() %}
+	<h5>{{ message }}</h5>
+	{% endfor %}
+
+    <h1>Login</h1>
+	<form role="form" method='POST'>
+		{{ form.csrf_token }}
+		{{ text(form.email, "Email", placeholder="your@email") }}
+		{{ text(form.password, "Password", placeholder="your password") }}
+		{{ form.submit(value="Login", class='btn btn-lg btn-success') }}
+	</form>
+</body>
+</html>
